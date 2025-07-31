@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
+using dotenv.net;
+
+DotEnv.Load();  
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,11 +16,17 @@ builder.Services.AddControllersWithViews();
 
 //inject dbcontext based off of the app enviroment
 IWebHostEnvironment enviroment = builder.Environment;
-if(enviroment.IsDevelopment())
+if (enviroment.IsDevelopment())
 {
-    builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnectionString")));
+    // Local dev (LocalDB)
+    
+    var blogCs = builder.Configuration.GetConnectionString("BlogDBConnectionString");
+    Console.WriteLine($"BlogDBConnectionString is: '{blogCs}'");
+    var authCs = builder.Configuration.GetConnectionString("BlogAuthDBConnectionString");
 
-    builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAuthDBConnectionString")));
+    builder.Services
+           .AddDbContext<BlogDbContext>(o => o.UseSqlServer(blogCs))
+           .AddDbContext<AuthDbContext>(o => o.UseSqlServer(authCs));
 
     //builder.Services.AddDbContext<BlogDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("Default")));
 
@@ -25,16 +35,27 @@ if(enviroment.IsDevelopment())
 }
 else if (enviroment.IsProduction())
 {
-    builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionBlogDbConnectionString")));
+    // builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionBlogDbConnectionString")));
 
-    builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionBlogAuthDBConnectionString")));
+    // builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionBlogAuthDBConnectionString")));
+    
+    // Local dev (LocalDB)
+    var blogCs  = builder.Configuration.GetConnectionString("ProductionBlogDbConnectionString");
+    var authCs  = builder.Configuration.GetConnectionString("ProductionBlogAuthDBConnectionString");
+
+    builder.Services
+           .AddDbContext<BlogDbContext>(o => o.UseSqlServer(blogCs))
+           .AddDbContext<AuthDbContext>(o => o.UseSqlServer(authCs));
     
 }
 else
 {
-    builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnectionString")));
+    var blogCs = builder.Configuration.GetConnectionString("BlogDBConnectionString");
+    var authCs = builder.Configuration.GetConnectionString("BlogAuthDBConnectionString");
 
-    builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAuthDBConnectionString")));
+    builder.Services
+           .AddDbContext<BlogDbContext>(o => o.UseSqlServer(blogCs))
+           .AddDbContext<AuthDbContext>(o => o.UseSqlServer(authCs));
 
 }
 
