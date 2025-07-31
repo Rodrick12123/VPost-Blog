@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240129204328_reinit")]
-    partial class reinit
+    [Migration("20250731174016_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,15 +169,15 @@ namespace Blog.Migrations.AuthDb
                         {
                             Id = "0b275ad8-842d-4423-ba91-a27ebbc0f3e7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb1af0c1-ff92-4f2c-b709-64ff378bc7cc",
+                            ConcurrencyStamp = "219c3c50-c0f3-443d-b78e-14eee1a87e84",
                             Email = "superAdmin@vpost.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@VPOST.COM",
                             NormalizedUserName = "SUPERADMIN@VPOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOBj7XCHkTCcM28NfMg7JsDWT9C8kUKl4gfo37NMcAN/eTMWffwZ/mY0NI0P2I2mHA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECgl5wkGrC/aIDn66QW75cz0lN72i2oJnVnk+fVNMc+99eWc3NZqxkkIE/XrsNWBkQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "683455a5-dd46-4816-ac4c-7694264d1d22",
+                            SecurityStamp = "18ffde5c-2f3d-4931-9c02-95d52d77296b",
                             TwoFactorEnabled = false,
                             UserName = "superAdmin@vpost.com"
                         });
