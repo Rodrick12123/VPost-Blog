@@ -2,3 +2,5 @@
 .env*
 /obj
 /bin
+/Properties
+Properties/
