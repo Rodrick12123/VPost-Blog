@@ -7,7 +7,8 @@ using Microsoft.Extensions.Options;
 
 using dotenv.net;
 
-DotEnv.Load();  
+DotEnv.Load();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,8 +41,8 @@ else if (enviroment.IsProduction())
     // builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionBlogAuthDBConnectionString")));
     
     // Local dev (LocalDB)
-    var blogCs  = builder.Configuration.GetConnectionString("ProductionBlogDbConnectionString");
-    var authCs  = builder.Configuration.GetConnectionString("ProductionBlogAuthDBConnectionString");
+    var blogCs  = builder.Configuration.GetConnectionString("BlogConnection");
+    var authCs  = builder.Configuration.GetConnectionString("AuthConnection");
 
     builder.Services
            .AddDbContext<BlogDbContext>(o => o.UseSqlServer(blogCs))
